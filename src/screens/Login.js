@@ -4,6 +4,8 @@ import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import CustomTextInput from '../components/CustomTextInput';
 import { login } from '../services';
+import { useSelector, useDispatch } from 'react-redux';
+import { setReduxUser } from '../redux/action';
 
 const SplashContainer = styled(View)`
   flex: 1;
@@ -16,9 +18,12 @@ const LoginFormContainer = styled(View)`
   border-color: black;
 `;
 
-loginFunction = (userName,password,navigation) => {
+loginFunction = (userName,password,navigation,dispatch) => {
   login({userName,password}).then(success => {
     if(success) {
+      //store user data in redux
+      dispatch(setReduxUser({userName,password}));
+      
       navigation.navigate('Dashboard')
     }
     else {
@@ -29,6 +34,7 @@ loginFunction = (userName,password,navigation) => {
 
 const Login = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [userName , setUserName] = useState('')
   const [password , setPassword] = useState('')
 
@@ -46,7 +52,7 @@ const Login = () => {
         />
         <TouchableOpacity
           onPress={() => {
-            loginFunction(userName,password,navigation)
+            loginFunction(userName,password,navigation,dispatch)
           }}
         >
           <Text>Login</Text>
