@@ -20,8 +20,8 @@ const Dashboard = (props) => {
   )
 }
 
-const mapStateToProps = (state, props) => ({
+const mapReduxStateToProps = (state, props) => ({
   userData: state.common.userData,
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapReduxStateToProps)(Dashboard);

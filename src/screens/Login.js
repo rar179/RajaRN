@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import CustomTextInput from '../components/CustomTextInput';
 import { login } from '../services';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setReduxUser } from '../redux/action';
 
 const SplashContainer = styled(View)`
