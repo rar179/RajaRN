@@ -20,9 +20,9 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Splash from './screens/Splash';
-import Login from './screens/Login';
-import Dashboard from './screens/Dashboard';
+import Splash from './src/screens/Splash';
+import Login from './src/screens/Login';
+import Dashboard from './src/screens/Dashboard';
 
 const RootStack = createNativeStackNavigator();
 
