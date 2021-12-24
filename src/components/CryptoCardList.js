@@ -32,20 +32,22 @@ const cryptoMap = {
 }
 
 const CryptoCardList = (props) => {
-  const { data } = props;
+  const { data, onPress } = props;
   
   const content = (Array.isArray(data) && data.length) ? data.map((item, index) => {
     const { amount, currency, pair } = item;
     
     return (
-      <CryptoCardBox key={index}>
-        <View style={{flex: 1}}>
-          <CryptoName>{cryptoMap[pair.base]}</CryptoName>
-        </View>
-        <View>
-          <CryptoPrice>{`${currency} ${formatTwoDecimal(amount)}`}</CryptoPrice>
-        </View>
-      </CryptoCardBox>
+      <TouchableOpacity key={index} onPress={() => onPress(pair.base)}>
+        <CryptoCardBox>
+          <View style={{flex: 1}}>
+            <CryptoName>{cryptoMap[pair.base]}</CryptoName>
+          </View>
+          <View>
+            <CryptoPrice>{`${currency} ${formatTwoDecimal(amount)}`}</CryptoPrice>
+          </View>
+        </CryptoCardBox>
+      </TouchableOpacity>
     );
   }) :
   <View/>

@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { getLunoPrices } from '../services';
 import CryptoCardList from '../components/CryptoCardList';
 
-const DashboardContainer = styled(View)`
+const BinanceContainer = styled(View)`
   /* */
 `;
 
-const Dashboard = (props) => {
+const Binance = (props) => {
   const { userData } = props;
   const [lunoPriceArr, setLunoPriceArr] = useState([]);
 
@@ -23,11 +23,10 @@ const Dashboard = (props) => {
     }, []);
   
   return (
-    <DashboardContainer>
-      <Text>Dashboard</Text>
+    <BinanceContainer>
       <Text>Welcome {!!userData ? userData.userName : 'Guest'}</Text>
       <CryptoCardList data={lunoPriceArr}/>
-    </DashboardContainer>
+    </BinanceContainer>
   )
 }
 
@@ -35,4 +34,4 @@ const mapReduxStateToProps = (state, props) => ({
   userData: state.common.userData,
 });
 
-export default connect(mapReduxStateToProps)(Dashboard);
+export default connect(mapReduxStateToProps)(Binance);

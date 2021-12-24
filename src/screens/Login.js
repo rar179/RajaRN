@@ -7,7 +7,7 @@ import { login } from '../services';
 import { useDispatch } from 'react-redux';
 import { setReduxUser } from '../redux/action';
 
-const SplashContainer = styled(View)`
+const LoginContainer = styled(View)`
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@ const Login = () => {
   const [password , setPassword] = useState('')
 
   return (
-    <SplashContainer>
+    <LoginContainer>
       <LoginFormContainer>
         <CustomTextInput 
           label={'Username / Email'} 
@@ -58,7 +58,7 @@ const Login = () => {
           <Text>Login</Text>
         </TouchableOpacity>
       </LoginFormContainer>
-    </SplashContainer>
+    </LoginContainer>
   )
 }
 
