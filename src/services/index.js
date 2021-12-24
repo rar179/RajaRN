@@ -1,8 +1,9 @@
-const api_url = 'https://retoolapi.dev/mxOQka'
+const login_api_url = 'https://retoolapi.dev/mxOQka'
+const luno_price_url = 'https://ajax.luno.com/ajax/1/price_page_info'
 
-const fullURL = path => `${api_url}/${path}`;
+const generate = (url,endpoint) => `${url}/${endpoint}`;
 
-const ServiceList = {
+const loginEndPoint = {
   login: 'login',
 }
 
@@ -10,7 +11,7 @@ export const login = async data => {
   const { userName , password } = data;
 
   let resp = await fetchAPI(
-    fullURL(ServiceList.login),
+    generate(login_api_url,loginEndPoint.login),
     {
       method: 'GET',
     },
@@ -25,6 +26,18 @@ export const login = async data => {
   })
 
   return success;
+};
+
+export const getLunoPrices = async () => {
+  let resp = await fetchAPI(
+    generate(luno_price_url,''),
+    {
+      method: 'POST',
+      body: "{\"currency\":\"BTC\"}",
+    },
+  );
+
+  return resp;
 };
 
 const fetchAPI = async (url, header) => {

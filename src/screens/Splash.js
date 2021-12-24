@@ -16,7 +16,7 @@ const Splash = () => {
   useEffect(() => {
     //simulate session checking
     setTimeout(() => {
-      navigation.navigate('LoginScreen')
+      navigation.navigate('Dashboard')
     }, 2000);
   }, []);
 
