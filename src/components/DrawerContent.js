@@ -7,27 +7,28 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 
-const InputLabel = styled(Text)`
-  font-size: 20px;
-`;
+import { useDispatch } from 'react-redux';
+import { setReduxUser } from '../redux/action';
 
-const InputBox = styled(TextInput)`
-  width: 250px;
-  height: 25px;
-  background-color: white;
-`;
-
-const DrawerContent = (props) => {
+const DrawerContent = ({navigation}) => {
+  const dispatch = useDispatch();
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
+    <DrawerContentScrollView>
+      <DrawerItem
+        label="Logout"
+        onPress={() => {
+          //clear user redux
+          navigation.closeDrawer();
+          dispatch(setReduxUser({}));
+        }}
+      />
       <DrawerItem
         label="Close drawer"
-        onPress={() => props.navigation.closeDrawer()}
+        onPress={() => navigation.closeDrawer()}
       />
       <DrawerItem
         label="Toggle drawer"
-        onPress={() => props.navigation.toggleDrawer()}
+        onPress={() => navigation.toggleDrawer()}
       />
     </DrawerContentScrollView>
   );

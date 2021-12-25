@@ -7,6 +7,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -20,6 +21,7 @@ import Luno from '../screens/Luno';
 import Binance from '../screens/Binance';
 import Details from '../screens/Details';
 import DrawerContent from '../components/DrawerContent';
+import DashboardHeader from '../components/DashboardHeader';
 
 const RootStack = createNativeStackNavigator();
 
@@ -30,7 +32,19 @@ const LunoScreenStack = () => {
     <LunoStack.Navigator
       initialRouteName='LunoDashboard'
     >
-      <LunoStack.Screen name='LunoDashboard' component={Luno} />
+      <LunoStack.Screen name='LunoDashboard' component={Luno} 
+        options={
+          ({navigation}) => {
+            return { headerRight: () => (
+              <Button
+                onPress={() => navigation.openDrawer()}
+                title="||||"
+                color="#000"
+              />
+            )}
+          }
+        }
+      />
       <LunoStack.Screen name='Details' component={Details} />
     </LunoStack.Navigator>
   )
@@ -43,21 +57,21 @@ const BinanceScreenStack = () => {
     <BinanceStack.Navigator
       initialRouteName='BinanceDashboard'
     >
-      <BinanceStack.Screen name='BinanceDashboard' component={Binance} />
+      <BinanceStack.Screen name='BinanceDashboard' component={Binance} 
+        options={
+          ({navigation}) => {
+            return { headerRight: () => (
+              <Button
+                onPress={() => navigation.openDrawer()}
+                title="||||"
+                color="#000"
+              />
+            )}
+          }
+        }
+      />
       <BinanceStack.Screen name='Details' component={Details} />
     </BinanceStack.Navigator>
-  )
-}
-
-const Drawer = createDrawerNavigator();
-
-const DrawerScreenStack = () => {
-  return (
-    <Drawer.Navigator
-    drawerContent={(props) => <DrawerContent {...props} />}
-    >
-      <Drawer.Screen name='Login' component={Login} />
-    </Drawer.Navigator>
   )
 }
 
@@ -66,10 +80,10 @@ const DashboardTab = createBottomTabNavigator();
 const DashboardScreenStack = () => {
   return (
     <DashboardTab.Navigator
-      initialRouteName='Dashboard' 
-      screenOptions={{
-        headerShown: false,
-      }}
+    initialRouteName='Dashboard' 
+    screenOptions={{
+      headerShown: false,
+    }}
     >
       <DashboardTab.Screen name='Luno' component={LunoScreenStack} />
       <DashboardTab.Screen name='Binance' component={BinanceScreenStack} />
@@ -77,8 +91,24 @@ const DashboardScreenStack = () => {
   )
 }
 
+const Drawer = createDrawerNavigator();
+
+const DrawerScreenStack = () => {
+  return (
+    <Drawer.Navigator
+      drawerContent={(props) => <DrawerContent {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerPosition: 'right',
+      }}
+    >
+      <Drawer.Screen name='drawer' component={DashboardScreenStack} />
+    </Drawer.Navigator>
+  )
+}
+
 const DashboardNavigator = () => {
-  return <DashboardScreenStack />;
+  return <DrawerScreenStack />;
 };
 
 export default DashboardNavigator;

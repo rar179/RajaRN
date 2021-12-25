@@ -80,7 +80,7 @@ const fetchAPI = async (url, header) => {
 
   store.dispatch(toggleLoader(true));
 
-  const resp = await timeout( 10000 ,fetch(url, header));
+  const resp = await timeout(5000 ,fetch(url, header));
 
   store.dispatch(toggleLoader(false));
 
