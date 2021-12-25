@@ -7,39 +7,37 @@ import { login, signup } from '../services';
 import { useDispatch } from 'react-redux';
 import { setReduxUser } from '../redux/action';
 
-const LoginContainer = styled(View)`
+const SignIpContainer = styled(View)`
   flex: 1;
   align-items: center;
   justify-content: center;
 `;
 
-const LoginFormContainer = styled(View)`
+const SignUpFormContainer = styled(View)`
   border-width: 1px;
   border-color: black;
 `;
 
-
-const Login = () => {
-  const navigation = useNavigation();
+const SignUp = () => {
   const dispatch = useDispatch();
   const [userName , setUserName] = useState('')
   const [password , setPassword] = useState('')
 
-  const loginFunction = (userName,password) => {
-    login({userName,password}).then(success => {
+  const signupFunction = (userName,password) => {
+    signup({userName,password}).then(success => {
       if(success) {
         //store user data in redux
         dispatch(setReduxUser({userName,password}));
       }
       else {
-        alert('Invalid login')
+        alert('Invalid signup')
       }
     })
   }
 
   return (
-    <LoginContainer>
-      <LoginFormContainer>
+    <SignIpContainer>
+      <SignUpFormContainer>
         <CustomTextInput 
           label={'Username / Email'} 
           onChangeText={(text) => setUserName(text)}
@@ -51,17 +49,14 @@ const Login = () => {
         />
         <TouchableOpacity
           onPress={() => {
-            loginFunction(userName,password)
+            signupFunction(userName,password)
           }}
         >
-          <Text>Login</Text>
+          <Text>Sign Up</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=> navigation.navigate('SignUp')}>
-          <Text>Create new account</Text>
-        </TouchableOpacity>
-      </LoginFormContainer>
-    </LoginContainer>
+      </SignUpFormContainer>
+    </SignIpContainer>
   )
 }
 
-export default Login;
+export default SignUp;

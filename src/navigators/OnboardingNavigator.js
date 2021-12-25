@@ -14,6 +14,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Splash from '../screens/Splash';
 import Login from '../screens/Login';
+import SignUp from '../screens/SignUp';
 
 const OnboardingStack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const OnboardingScreenStack = () => {
       initialRouteName='Login'
     >
       <OnboardingStack.Screen name='Login' component={Login} />
+      <OnboardingStack.Screen name='SignUp' component={SignUp} />
     </OnboardingStack.Navigator>
   )
 }
