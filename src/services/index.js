@@ -6,6 +6,14 @@ const luno_price_url = 'https://ajax.luno.com/ajax/1/price_page_info'
 
 const generate = (url,endpoint) => `${url}/${endpoint}`;
 
+const Header = () => {
+  let headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+  return headers;
+};
+
 const onboardingEndPoint = {
   login: 'data',
   signup: 'data',
@@ -13,12 +21,11 @@ const onboardingEndPoint = {
 
 export const login = async data => {
   const { userName , password } = data;
-  // console.log(JSON.stringify(data))
   let resp = await fetchAPI(
     generate(onboarding_api_url,onboardingEndPoint.login),
     {
       method: 'GET',
-      headers: 'Content-Type: application/json',
+      headers: Header(),
     },
   );
 
@@ -33,30 +40,23 @@ export const login = async data => {
   return success;
 };
 
-// curl -X POST -H 'Content-Type: application/json' -d '{"key":"value"}' https://retoolapi.dev/pXr29u/data
-
 export const signup = async data => {
-  const objToSend = {
-    id: 10,
-    ...data,
-  }
 
   let resp = await fetchAPI(
     generate(onboarding_api_url,onboardingEndPoint.signup),
     {
       method: 'POST',
-      headers: JSON.stringify(objToSend),
-      // body: JSON.stringify(objToSend),
+      headers: Header(),
+      body: JSON.stringify(data),
     },
   );
 
-  //Login credentials check
-  let success = true;
-  // resp.map(data => {
-  //   if(data.userName === userName && data.password === password) {
-  //     success = true;
-  //   }
-  // })
+  //check resp
+  let success = false;
+  const { userName:respUserName, password:respPassword } = resp;
+  if(respUserName === data.userName && respPassword === data.password) {
+    success = true;
+  }
 
   return success;
 };
