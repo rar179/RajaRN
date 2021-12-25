@@ -6,7 +6,8 @@ import { getLunoPrices } from '../services';
 import CryptoCardList from '../components/CryptoCardList';
 
 const BinanceContainer = styled(View)`
-  /* */
+  flex: 1;
+  background-color: white;
 `;
 
 const Binance = (props) => {

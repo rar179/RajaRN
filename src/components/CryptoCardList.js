@@ -1,18 +1,20 @@
-import { View , Text , TextInput, TouchableOpacity } from 'react-native';
+import { View , Text , TextInput, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { isEmpty } from 'lodash';
 import { formatTwoDecimal } from '../utils'
 
 const CryptoCardView = styled(View)`
-  padding: 0px 50px 0px 50px;
+  flex: 1;
 `;
 
 const CryptoCardBox = styled(View)`
-  border-width: 1px;
-  border-color: black;
-  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 50px 10px 50px;
   flex-direction: row;
+  background-color: #e0e0e0;
+  height: 70px;
 `;
 
 const CryptoName = styled(Text)`
@@ -32,7 +34,7 @@ const cryptoMap = {
 }
 
 const CryptoCardList = (props) => {
-  const { data, onPress } = props;
+  const { data, onPress, onRefresh } = props;
   
   const content = (Array.isArray(data) && data.length) ? data.map((item, index) => {
     const { amount, currency, pair } = item;
@@ -53,9 +55,19 @@ const CryptoCardList = (props) => {
   <View/>
   
   return (
-   <CryptoCardView>
-     {content}
-   </CryptoCardView> 
+    <CryptoCardView>
+      <ScrollView 
+        style={{paddingTop: 40}}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={onRefresh}
+          />
+        }
+      >
+        {content}
+      </ScrollView>
+    </CryptoCardView> 
   )
 }
 

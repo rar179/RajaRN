@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const LunoContainer = styled(View)`
   flex: 1;
-  background-color: white;
+  background-color: #969696;
 `;
 
 function searchCryptoDetail(currency, cryptoDetailsArr) {
@@ -37,16 +37,27 @@ const Luno = (props) => {
       setCryptoDetailsArr(learnArticles);
     })
   }, []);
+
+  const onPullToRefresh = () => {
+    getLunoPrices().then(res => {
+      const { basicChart, learnArticles } = res;
+      const { availablePairs } = basicChart;
+      setLunoPriceArr(availablePairs);
+      setCryptoDetailsArr(learnArticles);
+    })
+  }
   
   return (
     <LunoContainer>
-      <Text>Welcome {!!userData ? userData.userName : 'Guest'}</Text>
-      <CryptoCardList data={lunoPriceArr} 
+      {/* <Text>Welcome {!!userData ? userData.userName : 'Guest'}</Text> */}
+      <CryptoCardList 
+        data={lunoPriceArr} 
         onPress={(currency) => { 
             const details = searchCryptoDetail(currency,cryptoDetailsArr);
             navigation.navigate('Details', { details }); 
           }
         }
+        onRefresh={onPullToRefresh}
       />
     </LunoContainer>
   )

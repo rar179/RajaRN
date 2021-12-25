@@ -10,18 +10,14 @@ import {
   Button,
 } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import Splash from '../screens/Splash';
-import Login from '../screens/Login';
 import Luno from '../screens/Luno';
 import Binance from '../screens/Binance';
 import Details from '../screens/Details';
 import DrawerContent from '../components/DrawerContent';
-import DashboardHeader from '../components/DashboardHeader';
 
 const RootStack = createNativeStackNavigator();
 
@@ -31,6 +27,9 @@ const LunoScreenStack = () => {
   return (
     <LunoStack.Navigator
       initialRouteName='LunoDashboard'
+      screenOptions={{
+        headerBackTitleVisible: false,
+      }}
     >
       <LunoStack.Screen name='LunoDashboard' component={Luno} 
         options={
