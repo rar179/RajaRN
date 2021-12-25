@@ -23,8 +23,6 @@ loginFunction = (userName,password,navigation,dispatch) => {
     if(success) {
       //store user data in redux
       dispatch(setReduxUser({userName,password}));
-      
-      navigation.navigate('Dashboard')
     }
     else {
       alert('Invalid login')

@@ -28,15 +28,15 @@ const Luno = (props) => {
   const [lunoPriceArr = [], setLunoPriceArr] = useState([]);
   const [cryptoDetailsArr = [], setCryptoDetailsArr] = useState([]);
 
-    //componentdidmount
-    useEffect(() => {
-      getLunoPrices().then(res => {
-        const { basicChart, learnArticles } = res;
-        const { availablePairs } = basicChart;
-        setLunoPriceArr(availablePairs);
-        setCryptoDetailsArr(learnArticles);
-      })
-    }, []);
+  //componentdidmount
+  useEffect(() => {
+    getLunoPrices().then(res => {
+      const { basicChart, learnArticles } = res;
+      const { availablePairs } = basicChart;
+      setLunoPriceArr(availablePairs);
+      setCryptoDetailsArr(learnArticles);
+    })
+  }, []);
   
   return (
     <LunoContainer>
