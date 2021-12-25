@@ -8,6 +8,7 @@ import {
   useColorScheme,
   View,
   Button,
+  Image,
 } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -39,6 +40,7 @@ const LunoScreenStack = () => {
                 onPress={() => navigation.openDrawer()}
                 title="||||"
                 color="#000"
+                style={{backgroundColor: 'transparent'}}
               />
             )}
           }
@@ -64,6 +66,7 @@ const BinanceScreenStack = () => {
                 onPress={() => navigation.openDrawer()}
                 title="||||"
                 color="#000"
+                style={{backgroundColor: 'transparent'}}
               />
             )}
           }
@@ -84,8 +87,26 @@ const DashboardScreenStack = () => {
       headerShown: false,
     }}
     >
-      <DashboardTab.Screen name='Luno' component={LunoScreenStack} />
-      <DashboardTab.Screen name='Binance' component={BinanceScreenStack} />
+      <DashboardTab.Screen name='Luno' component={LunoScreenStack} 
+        options={{
+          tabBarIcon: ({size}) => (
+            <Image 
+              style={{ width: 30, height: 30}}
+              source={{uri: 'https://d32exi8v9av3ux.cloudfront.net/auth-app/2021/12/01/25d979/auth-app/assets/img/default_og_image.png'}}
+            />
+          )
+        }}
+      />
+      <DashboardTab.Screen name='Binance' component={BinanceScreenStack} 
+        options={{
+          tabBarIcon: ({size}) => (
+            <Image 
+              style={{ width: 30, height: 30}}
+              source={{uri: 'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Binance-Coin-BNB-icon.png'}}
+            />
+          )
+        }}
+      />
     </DashboardTab.Navigator>
   )
 }

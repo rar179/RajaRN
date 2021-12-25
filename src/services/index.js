@@ -45,13 +45,13 @@ export const signup = async data => {
     generate(onboarding_api_url,onboardingEndPoint.signup),
     {
       method: 'POST',
-      headers: 'Content-Type: application/json',
-      body: JSON.stringify(objToSend),
+      headers: JSON.stringify(objToSend),
+      // body: JSON.stringify(objToSend),
     },
   );
 
   //Login credentials check
-  let success = false;
+  let success = true;
   // resp.map(data => {
   //   if(data.userName === userName && data.password === password) {
   //     success = true;

@@ -7,13 +7,27 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 
-import { useDispatch } from 'react-redux';
+import { connect,useDispatch } from 'react-redux';
 import { setReduxUser } from '../redux/action';
 
-const DrawerContent = ({navigation}) => {
+const UserView = styled(View)`
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const UserViewText = styled(Text)`
+  font-size: 20px;
+  color: black;
+`;
+
+const DrawerContent = ({navigation, userData}) => {
   const dispatch = useDispatch();
   return (
     <DrawerContentScrollView>
+      <UserView>
+        <UserViewText>{`Welcome ${userData.userName}`}</UserViewText>
+      </UserView>
       <DrawerItem
         label="Logout"
         onPress={() => {
@@ -34,4 +48,8 @@ const DrawerContent = ({navigation}) => {
   );
 }
 
-export default DrawerContent;
+const mapReduxStateToProps = (state, props) => ({
+  userData: state.common.userData,
+});
+
+export default connect(mapReduxStateToProps)(DrawerContent);

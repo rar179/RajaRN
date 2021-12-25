@@ -1,4 +1,4 @@
-import { View , Text } from 'react-native';
+import { View , Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const LunoContainer = styled(View)`
   flex: 1;
-  background-color: #969696;
+  background-color: #13326b;
 `;
 
 function searchCryptoDetail(currency, cryptoDetailsArr) {
@@ -49,7 +49,6 @@ const Luno = (props) => {
   
   return (
     <LunoContainer>
-      {/* <Text>Welcome {!!userData ? userData.userName : 'Guest'}</Text> */}
       <CryptoCardList 
         data={lunoPriceArr} 
         onPress={(currency) => { 

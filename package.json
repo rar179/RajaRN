@@ -7,7 +7,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "clean": "rimraf artifacts",
     "build": "npm run clean",
-    "ios": "react-native run-ios --simulator=\"iPhone 8\"",
+    "start:ios": "react-native run-ios --simulator=\"iPhone 8\"",
     "build:android": "npm run build && cd android && ./gradlew app:assembleRelease",
     "assets": "copyfiles --up 1 src/**/*.js src/**/*.svg src/**/*.json src/**/*.png src/**/*.jpg src/**/*.pdf src/**/*.mp4 artifacts/",
     "test": "jest",

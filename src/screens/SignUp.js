@@ -7,18 +7,38 @@ import { login, signup } from '../services';
 import { useDispatch } from 'react-redux';
 import { setReduxUser } from '../redux/action';
 
-const SignIpContainer = styled(View)`
+const SignUpContainer = styled(View)`
   flex: 1;
+  background-color: white;
   align-items: center;
   justify-content: center;
 `;
 
 const SignUpFormContainer = styled(View)`
-  border-width: 1px;
-  border-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #0884ff;
+`;
+
+const SignUpButton = styled(View)`
+  width: 100%;
+  height: 40px;
+  background-color: black;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
+
+const SignUpButtonText = styled(Text)`
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
 `;
 
 const SignUp = () => {
+  const navigation = useNavigation()
   const dispatch = useDispatch();
   const [userName , setUserName] = useState('')
   const [password , setPassword] = useState('')
@@ -26,8 +46,7 @@ const SignUp = () => {
   const signupFunction = (userName,password) => {
     signup({userName,password}).then(success => {
       if(success) {
-        //store user data in redux
-        dispatch(setReduxUser({userName,password}));
+        navigation.navigate('Login')
       }
       else {
         alert('Invalid signup')
@@ -36,14 +55,16 @@ const SignUp = () => {
   }
 
   return (
-    <SignIpContainer>
+    <SignUpContainer>
       <SignUpFormContainer>
         <CustomTextInput 
-          label={'Username / Email'} 
+          label={'New Username / Email'} 
           onChangeText={(text) => setUserName(text)}
+          autoCapitalize='none'
+          autoCorrect={false}
         />
         <CustomTextInput 
-          label={'Password'} 
+          label={'New Password'} 
           secureTextEntry={true} 
           onChangeText={(text) => setPassword(text)}
         />
@@ -52,10 +73,12 @@ const SignUp = () => {
             signupFunction(userName,password)
           }}
         >
-          <Text>Sign Up</Text>
+          <SignUpButton>
+            <SignUpButtonText>Sign Up</SignUpButtonText>
+          </SignUpButton>
         </TouchableOpacity>
       </SignUpFormContainer>
-    </SignIpContainer>
+    </SignUpContainer>
   )
 }
 

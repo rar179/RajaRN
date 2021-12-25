@@ -22,6 +22,7 @@ const OnboardingScreenStack = () => {
   return (
     <OnboardingStack.Navigator
       initialRouteName='Login'
+      screenOptions={{animationEnabled: false}}
     >
       <OnboardingStack.Screen name='Login' component={Login} />
       <OnboardingStack.Screen name='SignUp' component={SignUp} />

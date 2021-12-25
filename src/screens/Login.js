@@ -9,13 +9,32 @@ import { setReduxUser } from '../redux/action';
 
 const LoginContainer = styled(View)`
   flex: 1;
+  background-color: white;
   align-items: center;
   justify-content: center;
 `;
 
 const LoginFormContainer = styled(View)`
-  border-width: 1px;
-  border-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #0884ff;
+`;
+
+const LoginButton = styled(View)`
+  width: 100%;
+  height: 40px;
+  background-color: black;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
+
+const LoginButtonText = styled(Text)`
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
 `;
 
 
@@ -43,6 +62,8 @@ const Login = () => {
         <CustomTextInput 
           label={'Username / Email'} 
           onChangeText={(text) => setUserName(text)}
+          autoCapitalize='none'
+          autoCorrect={false}
         />
         <CustomTextInput 
           label={'Password'} 
@@ -54,7 +75,9 @@ const Login = () => {
             loginFunction(userName,password)
           }}
         >
-          <Text>Login</Text>
+          <LoginButton>
+            <LoginButtonText>Login</LoginButtonText>
+          </LoginButton>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=> navigation.navigate('SignUp')}>
           <Text>Create new account</Text>
