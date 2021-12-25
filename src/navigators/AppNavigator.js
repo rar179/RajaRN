@@ -1,9 +1,10 @@
 import { isEmpty } from 'lodash';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
 } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { setReduxUser } from '../redux/action';
 
 import Spinner from '../components/Spinner';
 
@@ -12,7 +13,13 @@ import DashboardNavigator from './DashboardNavigator';
 import OnboardingNavigator from './OnboardingNavigator';
 
 const AppNavigator = (props) => {
-  const { userData, isLoading } = props;
+  const dispatch = useDispatch();
+  const { userData, isLoading, session } = props;
+
+  //componentdidmount
+  useEffect(() => {
+    dispatch(setReduxUser(session));
+  }, []);
 
   return (
     <NavigationContainer>

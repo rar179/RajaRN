@@ -5,3 +5,20 @@ export function formatTwoDecimal(num) {
     return '';
   }
 }
+
+export function objToJson(obj) {
+  try {
+    return JSON.stringify(obj);
+  } catch {
+    return '';
+  }
+}
+
+export function jsonToObj(json) {
+  try {
+    return JSON.parse(json);
+  } catch(er) {
+    console.log(er)
+    return {};
+  }
+}

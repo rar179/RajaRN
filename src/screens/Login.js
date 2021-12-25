@@ -6,6 +6,8 @@ import CustomTextInput from '../components/CustomTextInput';
 import { login, signup } from '../services';
 import { useDispatch } from 'react-redux';
 import { setReduxUser } from '../redux/action';
+import AsyncStorage from '@react-native-community/async-storage';
+import { objToJson } from '../utils';
 
 const LoginContainer = styled(View)`
   flex: 1;
@@ -49,6 +51,8 @@ const Login = () => {
       if(success) {
         //store user data in redux
         dispatch(setReduxUser({userName,password}));
+        //save in app storage
+        AsyncStorage.setItem('@Store:userData', objToJson({userName,password}));
       }
       else {
         alert('Invalid login')

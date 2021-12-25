@@ -9,6 +9,7 @@ import {
 
 import { connect,useDispatch } from 'react-redux';
 import { setReduxUser } from '../redux/action';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const UserView = styled(View)`
   height: 100px;
@@ -34,6 +35,8 @@ const DrawerContent = ({navigation, userData}) => {
           //clear user redux
           navigation.closeDrawer();
           dispatch(setReduxUser({}));
+          //clear app storage
+          AsyncStorage.removeItem('@Store:userData')
         }}
       />
       <DrawerItem
