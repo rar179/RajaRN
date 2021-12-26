@@ -1,5 +1,5 @@
 import { View , Text , TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import CustomTextInput from '../components/CustomTextInput';
@@ -37,15 +37,53 @@ const SignUpButtonText = styled(Text)`
   font-size: 20px;
 `;
 
-const SignUp = () => {
-  const navigation = useNavigation()
-  const dispatch = useDispatch();
+const SignUpForm = ({onFormChangeText,isValidForm}) => {
   const [userName , setUserName] = useState('')
   const [password , setPassword] = useState('')
 
-  const signupFunction = (userName,password) => {
-    signup({userName,password}).then(success => {
+  //check if empty
+  const checkValid = () => {
+    return userName.length > 0 && password.length > 0;
+  }
+
+  useEffect(() => {
+    onFormChangeText({userName,password})
+    isValidForm(checkValid())
+  },[userName,password])
+
+  return (
+    <View>
+      <CustomTextInput 
+        label={'New Username / Email'} 
+        onChangeText={(text) => {
+          setUserName(text)
+        }}
+        autoCapitalize='none'
+        autoCorrect={false}
+      />
+      <CustomTextInput 
+        label={'New Password'} 
+        secureTextEntry={true} 
+        onChangeText={(text) => setPassword(text)}
+      />
+    </View>
+  )
+}
+
+const SignUp = () => {
+  const navigation = useNavigation()
+  const dispatch = useDispatch();
+  const [userData , setUserData] = useState({})
+  const [valid, setValid] = useState(false);
+
+  const signupFunction = () => {
+    if(!valid) {
+      alert('Invalid field');
+      return;
+    }
+    signup(userData).then(success => {
       if(success) {
+        alert('Success , you can now login');
         navigation.navigate('Login')
       }
       else {
@@ -57,20 +95,15 @@ const SignUp = () => {
   return (
     <SignUpContainer>
       <SignUpFormContainer>
-        <CustomTextInput 
-          label={'New Username / Email'} 
-          onChangeText={(text) => setUserName(text)}
-          autoCapitalize='none'
-          autoCorrect={false}
-        />
-        <CustomTextInput 
-          label={'New Password'} 
-          secureTextEntry={true} 
-          onChangeText={(text) => setPassword(text)}
+        <SignUpForm 
+          onFormChangeText={(userData) => {
+            setUserData(userData);
+          }}
+          isValidForm={(validity) => setValid(validity)}
         />
         <TouchableOpacity
           onPress={() => {
-            signupFunction(userName,password)
+            signupFunction()
           }}
         >
           <SignUpButton>

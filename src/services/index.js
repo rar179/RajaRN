@@ -32,8 +32,6 @@ export const login = async data => {
   //Login credentials check
   let success = false;
   resp.map(data => {
-    console.log('data.userName',data.userName)
-    console.log('data.password',data.password)
     if(data.userName === userName && data.password === password) {
       success = true;
     }

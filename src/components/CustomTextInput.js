@@ -18,6 +18,7 @@ const InputBox = styled(TextInput)`
   border-radius: 5px;
   background-color: white;
   padding: 0;
+  text-align: center;
 `;
 
 const CustomTextInput = (props) => {

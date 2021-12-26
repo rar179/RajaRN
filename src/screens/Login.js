@@ -1,5 +1,5 @@
 import { View , Text , TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import CustomTextInput from '../components/CustomTextInput';
@@ -39,20 +39,60 @@ const LoginButtonText = styled(Text)`
   font-size: 20px;
 `;
 
+const LoginForm = ({onFormChangeText,isValidForm}) => {
+  const [userName , setUserName] = useState('')
+  const [password , setPassword] = useState('')
+
+  //check if empty
+  const checkValid = () => {
+    return userName.length > 0 && password.length > 0;
+  }
+
+  useEffect(() => {
+    onFormChangeText({userName,password})
+    isValidForm(checkValid())
+  },[userName,password])
+
+  return (
+    <View>
+      <CustomTextInput 
+        label={'Username / Email'} 
+        onChangeText={(text) => {
+          setUserName(text)
+        }}
+        autoCapitalize='none'
+        autoCorrect={false}
+      />
+      <CustomTextInput 
+        label={'Password'} 
+        secureTextEntry={true} 
+        onChangeText={(text) => {
+          setPassword(text)
+          // onFormChangeText({userName,text})
+        }}
+      />
+    </View>
+  )
+}
+
 
 const Login = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [userName , setUserName] = useState('')
-  const [password , setPassword] = useState('')
+  const [userData , setUserData] = useState({})
+  const [valid, setValid] = useState(false);
 
-  const loginFunction = (userName,password) => {
-    login({userName,password}).then(success => {
+  const loginFunction = () => {
+    if(!valid) {
+      alert('Invalid field');
+      return;
+    }
+    login(userData).then(success => {
       if(success) {
         //store user data in redux
-        dispatch(setReduxUser({userName,password}));
+        dispatch(setReduxUser(userData));
         //save in app storage
-        AsyncStorage.setItem('@Store:userData', objToJson({userName,password}));
+        AsyncStorage.setItem('@Store:userData', objToJson(userData));
       }
       else {
         alert('Invalid login')
@@ -63,20 +103,15 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginFormContainer>
-        <CustomTextInput 
-          label={'Username / Email'} 
-          onChangeText={(text) => setUserName(text)}
-          autoCapitalize='none'
-          autoCorrect={false}
-        />
-        <CustomTextInput 
-          label={'Password'} 
-          secureTextEntry={true} 
-          onChangeText={(text) => setPassword(text)}
+        <LoginForm 
+          onFormChangeText={(userData) => {
+            setUserData(userData);
+          }}
+          isValidForm={(validity) => setValid(validity)}
         />
         <TouchableOpacity
           onPress={() => {
-            loginFunction(userName,password)
+            loginFunction()
           }}
         >
           <LoginButton>
