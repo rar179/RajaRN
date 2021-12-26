@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { isEmpty } from 'lodash';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
 } from 'react-native';
@@ -11,20 +12,34 @@ import Spinner from '../components/Spinner';
 import { NavigationContainer } from '@react-navigation/native';
 import DashboardNavigator from './DashboardNavigator';
 import OnboardingNavigator from './OnboardingNavigator';
+import Splash from '../screens/Splash';
+import { checkSessionAPI } from '../services/index'
+import { jsonToObj } from '../utils';
 
 const AppNavigator = (props) => {
   const dispatch = useDispatch();
-  const { userData, isLoading, session } = props;
-
+  const { userData, isLoading } = props;
+  const [loadedSession ={} , setLoadedSession] = useState(false);
+  
   //componentdidmount
   useEffect(() => {
-    dispatch(setReduxUser(session));
+    async function checkSession() {
+      // You can await here
+      const userData = await AsyncStorage.getItem('@Store:userData');
+      checkSessionAPI(jsonToObj(userData)).then(resp => {
+        dispatch(setReduxUser(resp));
+        setLoadedSession(true);
+      })
+      // ...
+    }
+    checkSession()
   }, []);
 
   return (
     <NavigationContainer>
       {isLoading && <Spinner />}
-      {!isEmpty(userData) ? <DashboardNavigator/> : <OnboardingNavigator/>}
+      {!loadedSession && <Splash />}
+      {loadedSession && (!isEmpty(userData) ? <DashboardNavigator/> : <OnboardingNavigator/>)}
     </NavigationContainer>
   );
 };

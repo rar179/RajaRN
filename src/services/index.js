@@ -1,7 +1,7 @@
 import { store } from '../redux/store';
 import { toggleLoader } from '../redux/action';
 
-const onboarding_api_url = 'https://retoolapi.dev/pXr29u'
+const onboarding_api_url = 'https://retoolapi.dev/z0nrNI'
 const luno_price_url = 'https://ajax.luno.com/ajax/1/price_page_info'
 
 const generate = (url,endpoint) => `${url}/${endpoint}`;
@@ -32,6 +32,8 @@ export const login = async data => {
   //Login credentials check
   let success = false;
   resp.map(data => {
+    console.log('data.userName',data.userName)
+    console.log('data.password',data.password)
     if(data.userName === userName && data.password === password) {
       success = true;
     }
@@ -72,6 +74,28 @@ export const getLunoPrices = async () => {
 
   return resp;
 };
+
+export const checkSessionAPI = async data => {
+  const { userName , password } = data || {};
+  let resp = await fetchAPI(
+    generate(onboarding_api_url,onboardingEndPoint.login),
+    {
+      method: 'GET',
+      headers: Header(),
+    },
+  );
+
+  //Login credentials check
+  let userData = {};
+  resp.map(data => {
+    if(data.userName === userName && data.password === password) {
+      userData = data;
+    }
+  })
+
+  return userData;
+};
+
 
 const fetchAPI = async (url, header) => {
   console.log(`=========================================================`)
